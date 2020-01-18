@@ -1,6 +1,6 @@
 {
   "name": "postcss-hover-media-feature",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "PostCSS plugin that extracts and wraps rules containing `:hover` pseudo-classes in `@media (hover: hover) {}` media queries",
   "keywords": [
     "postcss",
