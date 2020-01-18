@@ -1,0 +1,71 @@
+import postcss from 'postcss'
+import selectorParser from 'postcss-selector-parser'
+
+import { name } from './package.json'
+
+const pluginName = name.split('/')[1]
+
+const selectorRegExp = /:hover/gi
+
+function createMediaQuery (rule) {
+  return postcss.parse('@media (hover: hover) {}').first.append(rule)
+}
+
+function parseSelector (selectors) {
+  return selectorParser(group => {
+    let hoverSelectors = selectorParser.root()
+    let nonHoverSelectors = group.clone()
+
+    group.walkPseudos(pseudo => {
+      if (pseudo.value === ':hover') {
+        hoverSelectors.append(pseudo.parent)
+      }
+    })
+
+    nonHoverSelectors.walkPseudos(pseudo => {
+      if (pseudo.value === ':hover') {
+        pseudo.parent.remove()
+      }
+    })
+
+    return [hoverSelectors, nonHoverSelectors]
+  }).transformSync(selectors, { lossless: false })
+}
+
+function isAlreadyNested (rule) {
+  let container = rule.parent
+
+  while (container !== null && container.type !== 'root') {
+    if (
+      container.type === 'atrule' &&
+      container.params.includes('hover: hover')
+    ) {
+      return true
+    }
+
+    container = container.parent
+  }
+
+  return false
+}
+
+export default postcss.plugin(pluginName, () => root => {
+  root.walkRules(selectorRegExp, rule => {
+    if (isAlreadyNested(rule)) {
+      return
+    }
+
+    let [hoverSelectors, nonHoverSelectors] = parseSelector(rule.selector)
+    let mediaQuery = createMediaQuery(rule.clone({ selector: hoverSelectors }))
+
+    root.insertAfter(rule, mediaQuery)
+
+    if (nonHoverSelectors.length) {
+      rule.selector = nonHoverSelectors
+
+      return
+    }
+
+    rule.remove()
+  })
+})

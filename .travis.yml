@@ -1,0 +1,18 @@
+language: node_js
+cache: yarn
+node_js:
+  - node
+  - "10"
+  - "8"
+script:
+  - yarn lint
+  - yarn test
+before_deploy:
+  - yarn build
+deploy:
+  provider: npm
+  email: "$NPM_EMAIL"
+  api_key: "$NPM_API_TOKEN"
+  skip_cleanup: true
+  on:
+    branch: master

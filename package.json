@@ -1,0 +1,75 @@
+{
+  "name": "postcss-hover-media-feature",
+  "version": "0.1.0",
+  "description": "PostCSS plugin that extracts and wraps rules containing `:hover` pseudo-classes in `@media (hover: hover) {}` media queries",
+  "keywords": [
+    "postcss",
+    "css",
+    "postcss-plugin",
+    "media",
+    "feature",
+    "query",
+    "hover",
+    "touch"
+  ],
+  "main": "index.cjs.js",
+  "module": "index.es.mjs",
+  "files": [
+    "index.cjs.js",
+    "index.cjs.js.map",
+    "index.es.mjs",
+    "index.es.mjs.map"
+  ],
+  "scripts": {
+    "lint": "eslint .",
+    "test": "jest",
+    "build": "rollup -c"
+  },
+  "author": "Saul Hardman <hello@iamsaul.co.uk>",
+  "license": "MIT",
+  "repository": "saulhardman/postcss-hover-media-feature",
+  "dependencies": {
+    "postcss": "^7.0.26"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.8.3",
+    "@babel/preset-env": "^7.8.3",
+    "@logux/eslint-config": "^33.0.0",
+    "@rollup/plugin-json": "^4.0.1",
+    "babel-eslint": "^10.0.3",
+    "eslint": "^6.5.1",
+    "eslint-config-postcss": "^3.0.7",
+    "eslint-config-standard": "^14.1.0",
+    "eslint-plugin-es5": "^1.4.1",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jest": "^22.19.0",
+    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-prefer-let": "^1.0.1",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-security": "^1.4.0",
+    "eslint-plugin-standard": "^4.0.1",
+    "eslint-plugin-unicorn": "^12.1.0",
+    "jest": "^24.9.0",
+    "postcss-selector-parser": "^6.0.2",
+    "rollup": "^1.29.0",
+    "rollup-plugin-babel": "^4.3.3"
+  },
+  "eslintConfig": {
+    "extends": "eslint-config-postcss",
+    "parser": "babel-eslint",
+    "parserOptions": {
+      "ecmaVersion": 6,
+      "sourceType": "module"
+    },
+    "rules": {
+      "node/no-unsupported-features/es-syntax": "off",
+      "max-len": "off"
+    }
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  }
+}
