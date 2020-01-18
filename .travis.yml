@@ -1,18 +1,22 @@
 language: node_js
 cache: yarn
 node_js:
-  - node
-  - "10"
-  - "8"
+- node
+- '10'
+- '8'
 script:
-  - yarn lint
-  - yarn test
+- yarn lint
+- yarn test
 before_deploy:
-  - yarn build
+- yarn build
 deploy:
   provider: npm
-  email: "$NPM_EMAIL"
-  api_key: "$NPM_API_TOKEN"
+  email:
+    secure: dbx6IfncvjBjGoWMmF3qtaeIpzQuOysdYx3sdLEpMBzAWfWCl6YwwVtlDF4kGRw9kBQkZsssoOnF05FUcmZ+ZPszEzkk25uz0OSYhC+vaAdXJ02vSuEQK0Tv51tcgBkAqMxLnnAMi68rh9BJDL/bEZTodE7bgFdL58Oh7FY6pdacIVCraqpqRP8R6ga4ztIfvcRfTsNbIH6z49RL8FQPgBY3TqJLUl7dMpLAlCiaUZ46TKtW471GxhtBwcgU3VQu186zl2HsarsBm/RTTTsRQPZqu64kCzXJ5L8r/55BoYMCnGJrzLAb5GJYj6trrqE4MS6/kotbsPPFRFWri3kv+EsRVPbqRmMEB3rjJ6FwKwWLqz+ivgwonBTwZP2CSKak/ma2uWHPKh0ELdaf5oV4R1pUIGdj/wo2rzWNAT8RllSnmbMR4cUPJsjdnQPWW5LfglcW0QQm707O/SONpFkHiZ4PJecq0+2D95civCxNpy+1grI3oCgzQp9t7bKEQwSPd3rMdVU65Q8vQ93KxcKWZlMrS6PMqrrICLxMCzzZuREMgon77TEDP0CUMVp14VsnumTrGlhwYlYejAd9nU/XDbYcjdKfP4RMbbKnP4vs1Hr6NnvR2vBdjOV4EOVBAknPtrFqExli+rEXLeoUYSa3X8PPn3+h+5JaRlBGA5k9dTg=
+  api_key:
+    secure: CdZNgI2cN99QAPksSgbCEnN07hlBhIq5P4egHeFsWeXFYO4FO+KjgGla9b6ox3QruKZzs/xNUR4SaNfDhQHhX49Rytczz/ld0J56sQt7JHTDDyx14hGchWhHlGYeLo8Y+YVpdjvSrYXCzdAb1VaJ3yx3q5dZzLcTxXcFzNLMdZIqhSJblke9q27gL6Luoc4X7Br0aumVaayuFrdms7LbojPjET41VU6uXTeQowGb/9T4gER72MsTXbqCaFwipRRtbO/oyYhXQ4/uvIt8oszcVE1UAR+H2sAodE7W0pywxYTsCBv52DlbGYGsdbu2QYVP+FklUKE7Lch8Y4IHmn9Pec3BAL3DTnu9NO0uYue2NsWTsDG22kCelcE3y3YnXY7D+4h604fA+fFHTv0Fm+I05ikNy83ENbP43HO9tBxknKpdtaBtIs7BjW4ThzYA6gOBGgZSsOlhkUzGT9je6k0P6nCHqNRr3KafS/L7WT+7xc2MAy5zp3bAALPP5LONmBUkCuZ5AkJGzmt0LAULNAyf+FtvCaEqRzhk3s23nNre9ymkfRGQgCd1syziR5Yiyv6AfU0GJ0SMcQv4rGb5xFUBzfm0iKN/JDCFEOCFcGPePgKiM0IcVTnuo2atcWhzfTLndnWy0n2qHQoIB4oXBe66a/2q8CtuwxsvTGhr2M6mkHY=
   skip_cleanup: true
   on:
     branch: master
+    tags: true
+    node: '10'
