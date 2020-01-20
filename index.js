@@ -63,13 +63,13 @@ export default postcss.plugin(pluginName, () => root => {
       return
     }
 
-    let [hoverSelectors, nonHoverSelectors] = parseSelector(rule.selector)
-    let mediaQuery = createMediaQuery(rule.clone({ selector: hoverSelectors }))
+    let [hoverSelector, nonHoverSelector] = parseSelector(rule.selector)
+    let mediaQuery = createMediaQuery(rule.clone({ selector: hoverSelector }))
 
     rule.after(mediaQuery)
 
-    if (nonHoverSelectors.length) {
-      rule.replaceWith(rule.clone({ selector: nonHoverSelectors }))
+    if (nonHoverSelector.length) {
+      rule.replaceWith(rule.clone({ selector: nonHoverSelector }))
 
       return
     }
