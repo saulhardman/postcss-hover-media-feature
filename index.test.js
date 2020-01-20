@@ -19,6 +19,13 @@ describe('basic usage', () => {
     )
   })
 
+  it('works when rule contains CSS declarations', async () => {
+    await run(
+      '.this-is-a-class:hover { text-decoration: underline; }',
+      '@media (hover: hover) {.this-is-a-class:hover { text-decoration: underline; }}'
+    )
+  })
+
   it('works with descendant selectors', async () => {
     await run(
       '.s-some-scope p a:hover {}',
