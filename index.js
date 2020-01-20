@@ -1,5 +1,4 @@
 import postcss from 'postcss'
-import selectorParser from 'postcss-selector-parser'
 
 import { name } from './package.json'
 
@@ -18,24 +17,12 @@ function createMediaQuery (rule) {
 }
 
 function parseSelector (selector) {
-  return selectorParser(group => {
-    let hoverSelector = selectorParser.root()
-    let nonHoverSelector = group.clone()
+  let selectorList = selector.split(',').map(s => s.trim())
 
-    group.walkPseudos(pseudo => {
-      if (pseudo.value === ':hover') {
-        hoverSelector.append(pseudo.parent)
-      }
-    })
+  let hoverSelector = selectorList.filter(s => s.includes(':hover')).join(',')
+  let nonHoverSelector = selectorList.filter(s => !s.includes(':hover')).join(',')
 
-    nonHoverSelector.walkPseudos(pseudo => {
-      if (pseudo.value === ':hover') {
-        pseudo.parent.remove()
-      }
-    })
-
-    return [hoverSelector, nonHoverSelector]
-  }).transformSync(selector, { lossless: false })
+  return [hoverSelector, nonHoverSelector]
 }
 
 function isAlreadyNested (rule) {
