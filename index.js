@@ -14,6 +14,8 @@ function createMediaQuery (rule) {
     source: rule.source
   })
 
+  atRule.cleanRaws()
+
   atRule.append(rule)
 
   return atRule
