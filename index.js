@@ -19,25 +19,25 @@ function createMediaQuery (rule) {
   return atRule
 }
 
-function parseSelector (selectors) {
+function parseSelector (selector) {
   return selectorParser(group => {
-    let hoverSelectors = selectorParser.root()
-    let nonHoverSelectors = group.clone()
+    let hoverSelector = selectorParser.root()
+    let nonHoverSelector = group.clone()
 
     group.walkPseudos(pseudo => {
       if (pseudo.value === ':hover') {
-        hoverSelectors.append(pseudo.parent)
+        hoverSelector.append(pseudo.parent)
       }
     })
 
-    nonHoverSelectors.walkPseudos(pseudo => {
+    nonHoverSelector.walkPseudos(pseudo => {
       if (pseudo.value === ':hover') {
         pseudo.parent.remove()
       }
     })
 
-    return [hoverSelectors, nonHoverSelectors]
-  }).transformSync(selectors, { lossless: false })
+    return [hoverSelector, nonHoverSelector]
+  }).transformSync(selector, { lossless: false })
 }
 
 function isAlreadyNested (rule) {
