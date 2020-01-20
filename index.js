@@ -69,7 +69,7 @@ export default postcss.plugin(pluginName, () => root => {
     rule.after(mediaQuery)
 
     if (nonHoverSelectors.length) {
-      rule.selector = nonHoverSelectors
+      rule.replaceWith(rule.clone({ selector: nonHoverSelectors }))
 
       return
     }
