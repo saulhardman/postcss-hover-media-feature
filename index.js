@@ -8,13 +8,9 @@ const pluginName = name.split('/')[1]
 const selectorRegExp = /:hover/gi
 
 function createMediaQuery (rule) {
-  let atRule = postcss.atRule({
-    name: 'media',
-    params: '(hover: hover)',
-    source: rule.source
-  })
+  let atRule = postcss.parse('@media (hover: hover) {}').first
 
-  atRule.cleanRaws()
+  atRule.source = rule.source
 
   atRule.append(rule)
 
