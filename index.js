@@ -19,10 +19,10 @@ function createMediaQuery (rule) {
 function parseSelector (selector) {
   let selectorList = selector.split(',').map(s => s.trim())
 
-  let hoverSelector = selectorList.filter(s => s.includes(':hover')).join(',')
-  let nonHoverSelector = selectorList.filter(s => !s.includes(':hover')).join(',')
-
-  return [hoverSelector, nonHoverSelector]
+  return [
+    selectorList.filter(s => s.includes(':hover')),
+    selectorList.filter(s => !s.includes(':hover'))
+  ]
 }
 
 function isAlreadyNested (rule) {
@@ -42,23 +42,45 @@ function isAlreadyNested (rule) {
   return false
 }
 
-export default postcss.plugin(pluginName, () => root => {
-  root.walkRules(selectorRegExp, rule => {
-    if (isAlreadyNested(rule)) {
-      return
-    }
+export default postcss.plugin(
+  pluginName,
+  ({
+    fallback = false,
+    fallbackSelector = 'html:not(.supports-touch)'
+  } = {}) => root => {
+    root.walkRules(selectorRegExp, rule => {
+      if (isAlreadyNested(rule)) {
+        return
+      }
 
-    let [hoverSelector, nonHoverSelector] = parseSelector(rule.selector)
-    let mediaQuery = createMediaQuery(rule.clone({ selector: hoverSelector }))
+      let [hoverSelectorList, nonHoverSelectorList] = parseSelector(
+        rule.selector
+      )
+      let mediaQuery = createMediaQuery(
+        rule.clone({ selector: hoverSelectorList.join(',') })
+      )
 
-    rule.after(mediaQuery)
+      rule.after(mediaQuery)
 
-    if (nonHoverSelector.length) {
-      rule.replaceWith(rule.clone({ selector: nonHoverSelector }))
+      if (fallback) {
+        rule.before(
+          rule.clone({
+            selector: hoverSelectorList.map(
+              hoverSelector => `${ fallbackSelector } ${ hoverSelector }`
+            )
+          })
+        )
+      }
 
-      return
-    }
+      if (nonHoverSelectorList.length) {
+        rule.replaceWith(
+          rule.clone({ selector: nonHoverSelectorList.join(',') })
+        )
 
-    rule.remove()
-  })
-})
+        return
+      }
+
+      rule.remove()
+    })
+  }
+)

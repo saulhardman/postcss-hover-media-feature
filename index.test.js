@@ -62,3 +62,49 @@ describe('basic usage', () => {
     ])
   })
 })
+
+describe('when `fallback: true`', () => {
+  it('outputs the default fallback selector', async () => {
+    await run(
+      '.this-is-a-class:hover {}',
+      [
+        'html:not(.supports-touch) .this-is-a-class:hover {}',
+        '@media (hover: hover) {.this-is-a-class:hover {}}'
+      ].join(''),
+      { fallback: true }
+    )
+  })
+
+  it('outputs a custom fallback selector', async () => {
+    await run(
+      '.this-is-a-class:hover {}',
+      [
+        '.no-hover .this-is-a-class:hover {}',
+        '@media (hover: hover) {.this-is-a-class:hover {}}'
+      ].join(''),
+      { fallback: true, fallbackSelector: '.no-hover' }
+    )
+  })
+
+  it('works with multiple selectors', async () => {
+    await Promise.all([
+      run(
+        '.this-is-a-class:hover, .banana {}',
+        [
+          'html:not(.supports-touch) .this-is-a-class:hover {}',
+          '.banana {}',
+          '@media (hover: hover) {.this-is-a-class:hover {}}'
+        ].join(''),
+        { fallback: true }
+      ),
+      run(
+        '.this-is-a-class:hover, .banana:hover {}',
+        [
+          'html:not(.supports-touch) .this-is-a-class:hover,html:not(.supports-touch) .banana:hover {}',
+          '@media (hover: hover) {.this-is-a-class:hover,.banana:hover {}}'
+        ].join(''),
+        { fallback: true }
+      )
+    ])
+  })
+})
