@@ -1,7 +1,7 @@
 language: node_js
 cache: yarn
 node_js:
-- node
+- '12'
 - '10'
 - '8'
 script:
@@ -19,4 +19,4 @@ deploy:
   on:
     branch: master
     tags: true
-    node_js: '10'
+    node_js: '12'
