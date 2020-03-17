@@ -1,11 +1,10 @@
 # PostCSS Hover Media Feature
 
-[![NPM Version][npm-img]][npm-url]
-[![Build Status][ci-img]][ci-url]
+[![NPM Version][npm-img]][npm-url] [![Build Status][ci-img]][ci-url]
 
-[PostCSS](https://github.com/postcss/postcss) plugin that extracts and
-wraps rules containing `:hover` pseudo-classes in `@media (hover: hover) {}`
-media queries.
+[PostCSS](https://github.com/postcss/postcss) plugin that extracts and wraps
+rules containing `:hover` pseudo-classes in `@media (hover: hover) {}` media
+queries.
 
 Certain mobile browsers apply `:hover` styles on 'tap', which (in most cases)
 isn't desirable. By wrapping `:hover` styles with a
@@ -55,7 +54,9 @@ settings.
 
 ## Options
 
-### `fallback: false`
+### `fallback`
+
+Type: `Boolean` Default: `false`
 
 The `fallback` option provides a way to extend this functionality to browsers
 that don't themselves support the Hover Media Feature. It prefixes rules whose
@@ -63,7 +64,7 @@ selectors contain the `:hover` pseudo-selector – only when this selector is al
 matched will the hover styles apply.
 
 ```js
-postcssHoverMediaFeature({ fallback: true }),
+postcssHoverMediaFeature({ fallback: true })
 ```
 
 ```css
@@ -87,14 +88,19 @@ html:not(.supports-touch) .foo:hover {
 }
 ```
 
-### `fallbackClassName: 'html:not(.supports-touch)'`
+### `fallbackClassName`
+
+Type: `String` Default: `html:not(.supports-touch)`
 
 The `fallbackClassName` option only comes into play if `fallback` is set to
 `true`. It dictates the class name that selectors containing `:hover`
 pseudo-class selectors are prefixed with.
 
 ```js
-postcssHoverMediaFeature({ fallback: true, fallbackClassName: '.supports-hover' }),
+postcssHoverMediaFeature({
+  fallback: true,
+  fallbackClassName: '.supports-hover'
+})
 ```
 
 ```css
@@ -120,5 +126,6 @@ postcssHoverMediaFeature({ fallback: true, fallbackClassName: '.supports-hover' 
 
 [npm-img]: https://img.shields.io/npm/v/postcss-hover-media-feature.svg
 [npm-url]: https://www.npmjs.com/package/postcss-hover-media-feature
-[ci-img]: https://img.shields.io/travis/saulhardman/postcss-hover-media-feature.svg
+[ci-img]:
+  https://img.shields.io/travis/saulhardman/postcss-hover-media-feature.svg
 [ci-url]: https://travis-ci.org/saulhardman/postcss-hover-media-feature
