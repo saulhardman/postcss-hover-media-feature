@@ -1,6 +1,9 @@
 # PostCSS Hover Media Feature
 
-[PostCSS](https://github.com/postcss/postcss) PostCSS plugin that extracts and
+[![NPM Version][npm-img]][npm-url]
+[![Build Status][ci-img]][ci-url]
+
+[PostCSS](https://github.com/postcss/postcss) plugin that extracts and
 wraps rules containing `:hover` pseudo-classes in `@media (hover: hover) {}`
 media queries.
 
@@ -114,3 +117,8 @@ postcssHoverMediaFeature({ fallback: true, fallbackClassName: '.supports-hover' 
   }
 }
 ```
+
+[npm-img]: https://img.shields.io/npm/v/postcss-hover-media-feature.svg
+[npm-url]: https://www.npmjs.com/package/postcss-hover-media-feature
+[ci-img]: https://img.shields.io/travis/saulhardman/postcss-hover-media-feature.svg
+[ci-url]: https://travis-ci.org/saulhardman/postcss-hover-media-feature
