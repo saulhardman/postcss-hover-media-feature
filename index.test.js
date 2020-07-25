@@ -27,10 +27,16 @@ describe('basic usage', () => {
   })
 
   it('works with descendant selectors', async () => {
-    await run(
-      '.s-some-scope p a:hover {}',
-      '@media (hover: hover) {.s-some-scope p a:hover {}}'
-    )
+    await Promise.all([
+      run(
+        '.s-some-scope p a:hover p {}',
+        '@media (hover: hover) {.s-some-scope p a:hover p {}}'
+      ),
+      run(
+        '.js .link:hover .thing {}',
+        '@media (hover: hover) {.js .link:hover .thing {}}'
+      )
+    ])
   })
 
   it('works with multiple selectors', async () => {
