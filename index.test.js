@@ -92,6 +92,17 @@ describe('when `fallback: true`', () => {
     )
   })
 
+  it('chains `fallbackSelector` if `rootSelectors` matches', async () => {
+    await run(
+      '.t-dark .another-class:hover {}',
+      [
+        'html:not(.supports-touch).t-dark .another-class:hover {}',
+        '@media (hover: hover) {.t-dark .another-class:hover {}}'
+      ].join(''),
+      { fallback: true, rootSelectors: ['.t-dark'] }
+    )
+  })
+
   it('works with multiple selectors', async () => {
     await Promise.all([
       run(

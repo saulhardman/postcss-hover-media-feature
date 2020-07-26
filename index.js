@@ -46,7 +46,8 @@ export default postcss.plugin(
   pluginName,
   ({
     fallback = false,
-    fallbackSelector = 'html:not(.supports-touch)'
+    fallbackSelector = 'html:not(.supports-touch)',
+    rootSelectors = []
   } = {}) => root => {
     root.walkRules(selectorRegExp, rule => {
       if (isAlreadyNested(rule)) {
@@ -65,9 +66,16 @@ export default postcss.plugin(
       if (fallback) {
         rule.before(
           rule.clone({
-            selector: hoverSelectorList.map(
-              hoverSelector => `${ fallbackSelector } ${ hoverSelector }`
-            )
+            selector: hoverSelectorList.map(hoverSelector => {
+              if (
+                rootSelectors.some(rootSelector =>
+                  hoverSelector.startsWith(rootSelector)
+                )
+              ) {
+                return `${ fallbackSelector }${ hoverSelector }`
+              }
+              return `${ fallbackSelector } ${ hoverSelector }`
+            })
           })
         )
       }
