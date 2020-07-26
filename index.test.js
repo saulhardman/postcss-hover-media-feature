@@ -50,7 +50,7 @@ describe('basic usage', () => {
       ),
       run(
         '.this-is-a-class:hover, .banana:hover {}',
-        '@media (hover: hover) {.this-is-a-class:hover,.banana:hover {}}'
+        '@media (hover: hover) {.this-is-a-class:hover, .banana:hover {}}'
       )
     ])
   })
@@ -117,8 +117,8 @@ describe('when `fallback: true`', () => {
       run(
         '.this-is-a-class:hover, .banana:hover {}',
         [
-          'html:not(.supports-touch) .this-is-a-class:hover,html:not(.supports-touch) .banana:hover {}',
-          '@media (hover: hover) {.this-is-a-class:hover,.banana:hover {}}'
+          'html:not(.supports-touch) .this-is-a-class:hover, html:not(.supports-touch) .banana:hover {}',
+          '@media (hover: hover) {.this-is-a-class:hover, .banana:hover {}}'
         ].join(''),
         { fallback: true }
       )

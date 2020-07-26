@@ -58,7 +58,7 @@ export default postcss.plugin(
         rule.selector
       )
       let mediaQuery = createMediaQuery(
-        rule.clone({ selector: hoverSelectorList.join(',') })
+        rule.clone({ selectors: hoverSelectorList })
       )
 
       rule.after(mediaQuery)
@@ -66,7 +66,7 @@ export default postcss.plugin(
       if (fallback) {
         rule.before(
           rule.clone({
-            selector: hoverSelectorList.map(hoverSelector => {
+            selectors: hoverSelectorList.map(hoverSelector => {
               if (
                 rootSelectors.some(rootSelector =>
                   hoverSelector.startsWith(rootSelector)
@@ -82,7 +82,7 @@ export default postcss.plugin(
 
       if (nonHoverSelectorList.length) {
         rule.replaceWith(
-          rule.clone({ selector: nonHoverSelectorList.join(',') })
+          rule.clone({ selectors: nonHoverSelectorList })
         )
 
         return
