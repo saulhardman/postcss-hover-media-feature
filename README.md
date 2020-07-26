@@ -88,18 +88,19 @@ html:not(.supports-touch) .foo:hover {
 }
 ```
 
-### `fallbackClassName`
+### `fallbackSelector`
 
 Type: `String` Default: `html:not(.supports-touch)`
 
-The `fallbackClassName` option only comes into play if `fallback` is set to
-`true`. It dictates the class name that selectors containing `:hover`
-pseudo-class selectors are prefixed with.
+Only relevant when `fallback: true`.
+
+Specifies the selector that is prepended with a descendent combinator to
+selectors containing `:hover` pseudo-class.
 
 ```js
 postcssHoverMediaFeature({
   fallback: true,
-  fallbackClassName: '.supports-hover'
+  fallbackSelector: '.supports-hover'
 })
 ```
 
@@ -120,6 +121,41 @@ postcssHoverMediaFeature({
   .foo:hover {
     color: blue;
     text-decoration: underline;
+  }
+}
+```
+
+### `rootSelectors`
+
+Type: `Array[String]` Default: `[]`
+
+Only relevant when `fallback: true`.
+
+Accepts an array of selectors that match the `:root` element (i.e. `<html>`) so
+that `fallbackSelector` is chained rather than prepended with descendent
+combinator.
+
+```js
+postcssHoverMediaFeature({
+  fallback: true,
+  rootSelectors: ['.t-dark']
+})
+```
+
+```css
+.t-dark .foo:hover {
+  color: white;
+}
+
+/* becomes */
+
+html:not(.supports-touch).t-dark .foo:hover {
+  color: white;
+}
+
+@media (hover: hover) {
+  .t-dark .foo:hover {
+    color: blue;
   }
 }
 ```
