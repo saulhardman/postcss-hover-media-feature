@@ -1,56 +1,53 @@
-import postcss from 'postcss'
+module.exports = ({
+  fallback = false,
+  fallbackSelector = 'html:not(.supports-touch)',
+  rootSelectors = []
+} = {}) => {
+  function createMediaQuery (rule, { AtRule }) {
+    let media = new AtRule({ name: 'media', params: '(hover: hover)' })
 
-import { name } from './package.json'
+    media.source = rule.source
 
-const pluginName = name.split('/')[1]
+    media.append(rule)
 
-const selectorRegExp = /:hover/gi
-
-function createMediaQuery (rule) {
-  let atRule = postcss.parse('@media (hover: hover) {}').first
-
-  atRule.source = rule.source
-
-  atRule.append(rule)
-
-  return atRule
-}
-
-function parseSelector (selector) {
-  let selectorList = selector.split(',').map(s => s.trim())
-
-  return [
-    selectorList.filter(s => s.includes(':hover')),
-    selectorList.filter(s => !s.includes(':hover'))
-  ]
-}
-
-function isAlreadyNested (rule) {
-  let container = rule.parent
-
-  while (container !== null && container.type !== 'root') {
-    if (
-      container.type === 'atrule' &&
-      container.params.includes('hover: hover')
-    ) {
-      return true
-    }
-
-    container = container.parent
+    return media
   }
 
-  return false
-}
+  function parseSelector (selector) {
+    let selectorList = selector.split(',').map(s => s.trim())
 
-export default postcss.plugin(
-  pluginName,
-  ({
-    fallback = false,
-    fallbackSelector = 'html:not(.supports-touch)',
-    rootSelectors = []
-  } = {}) => root => {
-    root.walkRules(selectorRegExp, rule => {
-      if (isAlreadyNested(rule)) {
+    return [
+      selectorList.filter(s => s.includes(':hover')),
+      selectorList.filter(s => !s.includes(':hover'))
+    ]
+  }
+
+  function isAlreadyNested (rule) {
+    let container = rule.parent
+
+    while (container !== null && container.type !== 'root') {
+      if (
+        container.type === 'atrule' &&
+        container.params.includes('hover: hover')
+      ) {
+        return true
+      }
+
+      container = container.parent
+    }
+
+    return false
+  }
+
+  return {
+    postcssPlugin: 'postcss-hover-media-feature',
+
+    Rule (rule, { AtRule }) {
+      if (
+        !rule.selector.includes(':hover') ||
+        isAlreadyNested(rule) ||
+        rule.selector.includes(fallbackSelector)
+      ) {
         return
       }
 
@@ -58,7 +55,8 @@ export default postcss.plugin(
         rule.selector
       )
       let mediaQuery = createMediaQuery(
-        rule.clone({ selectors: hoverSelectorList })
+        rule.clone({ selectors: hoverSelectorList }),
+        { AtRule }
       )
 
       rule.after(mediaQuery)
@@ -81,14 +79,14 @@ export default postcss.plugin(
       }
 
       if (nonHoverSelectorList.length) {
-        rule.replaceWith(
-          rule.clone({ selectors: nonHoverSelectorList })
-        )
+        rule.replaceWith(rule.clone({ selectors: nonHoverSelectorList }))
 
         return
       }
 
       rule.remove()
-    })
+    }
   }
-)
+}
+
+module.exports.postcss = true

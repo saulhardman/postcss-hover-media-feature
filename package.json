@@ -29,9 +29,6 @@
   "author": "Saul Hardman <hello@iamsaul.co.uk>",
   "license": "MIT",
   "repository": "saulhardman/postcss-hover-media-feature",
-  "dependencies": {
-    "postcss": "^7.0.26"
-  },
   "devDependencies": {
     "@babel/core": "^7.8.3",
     "@babel/preset-env": "^7.8.3",
@@ -52,8 +49,12 @@
     "eslint-plugin-standard": "^4.0.1",
     "eslint-plugin-unicorn": "^12.1.0",
     "jest": "^24.9.0",
+    "postcss": "^8.0.0",
     "rollup": "^1.29.0",
     "rollup-plugin-babel": "^4.3.3"
+  },
+  "peerDependencies": {
+    "postcss": "^8.0.0"
   },
   "eslintConfig": {
     "extends": "eslint-config-postcss",
