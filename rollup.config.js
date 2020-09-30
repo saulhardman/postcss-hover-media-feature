@@ -12,8 +12,5 @@ export default {
     { file: 'index.es.mjs', format: 'es', sourcemap: true }
   ],
 
-  plugins: [
-    json(),
-    babel(babelConfig)
-  ]
+  plugins: [json(), babel(babelConfig)]
 }

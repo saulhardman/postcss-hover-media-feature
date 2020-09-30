@@ -70,9 +70,9 @@ module.exports = ({
                   hoverSelector.startsWith(rootSelector)
                 )
               ) {
-                return `${ fallbackSelector }${ hoverSelector }`
+                return `${fallbackSelector}${hoverSelector}`
               }
-              return `${ fallbackSelector } ${ hoverSelector }`
+              return `${fallbackSelector} ${hoverSelector}`
             })
           })
         )

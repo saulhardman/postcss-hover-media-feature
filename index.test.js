@@ -1,6 +1,6 @@
-let postcss = require('postcss')
+const postcss = require('postcss')
 
-let plugin = require('./')
+const plugin = require('./')
 
 function run (input, output, opts = {}) {
   let result = postcss([plugin(opts)]).process(input, {

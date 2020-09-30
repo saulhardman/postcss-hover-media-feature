@@ -21,8 +21,8 @@
     "index.es.mjs.map"
   ],
   "scripts": {
-    "lint": "eslint .",
-    "test": "jest",
+    "lint": "eslint-ci .",
+    "test": "jest-ci --coverage",
     "build": "rollup -c",
     "version": "auto-changelog -p && git add CHANGELOG.md"
   },
@@ -32,40 +32,55 @@
   "devDependencies": {
     "@babel/core": "^7.8.3",
     "@babel/preset-env": "^7.8.3",
-    "@logux/eslint-config": "^33.0.0",
+    "@logux/eslint-config": "^40.0.5",
     "@rollup/plugin-json": "^4.0.1",
-    "auto-changelog": "^1.16.2",
-    "babel-eslint": "^10.0.3",
-    "eslint": "^6.5.1",
-    "eslint-config-postcss": "^3.0.7",
-    "eslint-config-standard": "^14.1.0",
-    "eslint-plugin-es5": "^1.4.1",
-    "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-jest": "^22.19.0",
-    "eslint-plugin-node": "^10.0.0",
-    "eslint-plugin-prefer-let": "^1.0.1",
+    "auto-changelog": "^2.2.1",
+    "clean-publish": "^1.1.8",
+    "eslint": "^7.10.0",
+    "eslint-ci": "^1.0.0",
+    "eslint-config-postcss": "^4.0.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jest": "^24.0.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prefer-let": "^1.1.0",
+    "eslint-plugin-prettierx": "^0.14.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-security": "^1.4.0",
     "eslint-plugin-standard": "^4.0.1",
-    "eslint-plugin-unicorn": "^12.1.0",
-    "jest": "^24.9.0",
-    "postcss": "^8.0.0",
-    "rollup": "^1.29.0",
+    "eslint-plugin-unicorn": "^22.0.0",
+    "husky": "^4.3.0",
+    "jest": "^26.4.2",
+    "jest-ci": "^0.1.1",
+    "jest-cli": "^26.4.2",
+    "lint-staged": "^10.4.0",
+    "postcss": "^8.1.1",
+    "rollup": "^2.28.2",
     "rollup-plugin-babel": "^4.3.3"
   },
   "peerDependencies": {
     "postcss": "^8.0.0"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": "eslint --fix"
+  },
   "eslintConfig": {
     "extends": "eslint-config-postcss",
-    "parser": "babel-eslint",
     "parserOptions": {
-      "ecmaVersion": 6,
+      "ecmaVersion": 2017,
       "sourceType": "module"
     },
+    "env": {
+      "node": true,
+      "es6": true
+    },
     "rules": {
-      "node/no-unsupported-features/es-syntax": "off",
-      "max-len": "off"
+      "jest/expect-expect": "off"
     }
   },
   "engines": {
