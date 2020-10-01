@@ -5,9 +5,11 @@ yarn-error.log
 .ruby-version
 
 # prettier
-.prettierrc.json
+.prettierrc.js
 
 # generated files
-index.*.*
-!index.test.js
+index.cjs.js
+index.cjs.js.map
+index.es.mjs
+index.es.mjs.map
 coverage/
