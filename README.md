@@ -51,12 +51,9 @@ If you already use PostCSS, add the plugin to plugins list:
 
 ```diff
 // postcss.config.js
-
-+ const postcssHoverMediaFeature = require('postcss-hover-media-feature');
-
 module.exports = {
   plugins: [
-+   postcssHoverMediaFeature,
+    require('postcss-hover-media-feature'),
     require('autoprefixer')
   ]
 }
@@ -78,7 +75,14 @@ selectors contain the `:hover` pseudo-selector – only when this selector is al
 matched will the hover styles apply.
 
 ```js
-postcssHoverMediaFeature({ fallback: true })
+// postcss.config.js
+module.exports = {
+  plugins: [
+    require('postcss-hover-media-feature')({
+      fallback: true
+    })
+  ]
+}
 ```
 
 ```css
@@ -112,10 +116,15 @@ Specifies the selector that is prepended with a descendent combinator to
 selectors containing `:hover` pseudo-class.
 
 ```js
-postcssHoverMediaFeature({
-  fallback: true,
-  fallbackSelector: '.supports-hover'
-})
+// postcss.config.js
+module.exports = {
+  plugins: [
+    require('postcss-hover-media-feature')({
+      fallback: true,
+      fallbackSelector: '.supports-hover'
+    })
+  ]
+}
 ```
 
 ```css
@@ -150,10 +159,15 @@ that `fallbackSelector` is chained rather than prepended with descendent
 combinator.
 
 ```js
-postcssHoverMediaFeature({
-  fallback: true,
-  rootSelectors: ['.t-dark']
-})
+// postcss.config.js
+module.exports = {
+  plugins: [
+    require('postcss-hover-media-feature')({
+      fallback: true,
+      rootSelectors: ['.t-dark']
+    })
+  ]
+}
 ```
 
 ```css
