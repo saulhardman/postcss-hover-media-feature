@@ -1,2 +1,6 @@
+node_modules/
+
+coverage/
+
 index.cjs.js
 index.es.mjs
