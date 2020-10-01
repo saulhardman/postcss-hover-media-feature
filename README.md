@@ -27,6 +27,20 @@ Media Query these styles will only be applied on devices that support them.
 }
 ```
 
+## Installation
+
+Using npm:
+
+```shell
+> npm install --save-dev postcss postcss-hover-media-feature
+```
+
+Using Yarn:
+
+```shell
+> yarn add --dev postcss postcss-hover-media-feature
+```
+
 ## Usage
 
 Check your project for an existing PostCSS config: `postcss.config.js` in the
