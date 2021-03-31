@@ -21,7 +21,8 @@
     "index.es.mjs.map"
   ],
   "scripts": {
-    "lint": "eslint-ci .",
+    "lint": "prettier '*.{md,yml}' --check && eslint-ci .",
+    "lint:fix": "prettier '*.{md,yml}' --write && eslint-ci . --fix",
     "test": "jest-ci --coverage",
     "build": "rollup -c",
     "version": "auto-changelog -p && git add CHANGELOG.md"
@@ -54,6 +55,7 @@
     "jest-cli": "^26.4.2",
     "lint-staged": "^10.4.0",
     "postcss": "^8.1.1",
+    "prettier": "^2.2.1",
     "rollup": "^2.28.2",
     "rollup-plugin-babel": "^4.3.3"
   },
@@ -66,7 +68,8 @@
     }
   },
   "lint-staged": {
-    "*.js": "eslint --fix"
+    "*.js": "eslint --fix",
+    "*.{md,yml}": "prettier --write"
   },
   "eslintConfig": {
     "extends": "eslint-config-postcss",
@@ -81,6 +84,11 @@
     "rules": {
       "jest/expect-expect": "off"
     }
+  },
+  "prettier": {
+    "singleQuote": true,
+    "semi": false,
+    "trailingComma": "none"
   },
   "engines": {
     "node": ">=10.0.0"
