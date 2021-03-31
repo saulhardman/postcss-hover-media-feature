@@ -1,6 +1,6 @@
 # PostCSS Hover Media Feature
 
-[![NPM Version][npm-img]][npm-url] [![Build Status][ci-img]][ci-url]
+[![NPM Version][npm-img]][npm-url] [![NPM Monthly Downloads][npm-dl-img]][npm-url] [![Build Status][ci-img]][ci-url]
 
 [PostCSS](https://github.com/postcss/postcss) plugin that extracts and wraps
 rules containing `:hover` pseudo-classes in `@media (hover: hover) {}` media
@@ -189,6 +189,7 @@ html:not(.supports-touch).t-dark .foo:hover {
 ```
 
 [npm-img]: https://img.shields.io/npm/v/postcss-hover-media-feature.svg
+[npm-dl-img]: https://img.shields.io/npm/dm/postcss-hover-media-feature
 [npm-url]: https://www.npmjs.com/package/postcss-hover-media-feature
 [ci-img]: https://img.shields.io/travis/saulhardman/postcss-hover-media-feature.svg
 [ci-url]: https://travis-ci.org/saulhardman/postcss-hover-media-feature
