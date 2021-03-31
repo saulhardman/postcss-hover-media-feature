@@ -53,7 +53,7 @@ If you already use PostCSS, add the plugin to plugins list:
 // postcss.config.js
 module.exports = {
   plugins: [
-    require('postcss-hover-media-feature'),
++   require('postcss-hover-media-feature'),
     require('autoprefixer')
   ]
 }
