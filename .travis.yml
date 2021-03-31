@@ -1,14 +1,14 @@
 language: node_js
 cache: yarn
 node_js:
-- node
-- '12'
-- '10'
+  - node
+  - '12'
+  - '10'
 script:
-- yarn lint
-- yarn test
+  - yarn lint
+  - yarn test
 before_deploy:
-- yarn build
+  - yarn build
 deploy:
   edge: true
   provider: npm

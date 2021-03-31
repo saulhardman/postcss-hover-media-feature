@@ -190,6 +190,5 @@ html:not(.supports-touch).t-dark .foo:hover {
 
 [npm-img]: https://img.shields.io/npm/v/postcss-hover-media-feature.svg
 [npm-url]: https://www.npmjs.com/package/postcss-hover-media-feature
-[ci-img]:
-  https://img.shields.io/travis/saulhardman/postcss-hover-media-feature.svg
+[ci-img]: https://img.shields.io/travis/saulhardman/postcss-hover-media-feature.svg
 [ci-url]: https://travis-ci.org/saulhardman/postcss-hover-media-feature
