@@ -1,3 +1,25 @@
+const selectorParser = require('postcss-selector-parser')
+
+const selectorProcessor = selectorParser(selectors => {
+  let hoverSelectors = []
+
+  selectors.walk(selector => {
+    if (selector.type === 'pseudo' && `${selector}` === ':hover') {
+      hoverSelectors.push(`${selector.parent}`)
+    }
+  })
+
+  let nonHoverSelectors = selectors.reduce((acc, selector) => {
+    if (hoverSelectors.includes(`${selector}`)) {
+      return acc
+    }
+
+    return [...acc, `${selector}`]
+  }, [])
+
+  return { hoverSelectors, nonHoverSelectors }
+})
+
 module.exports = ({
   fallback = false,
   fallbackSelector = 'html:not(.supports-touch)',
@@ -11,15 +33,6 @@ module.exports = ({
     media.append(rule)
 
     return media
-  }
-
-  function parseSelector (selector) {
-    let selectorList = selector.split(',').map(s => s.trim())
-
-    return [
-      selectorList.filter(s => s.includes(':hover')),
-      selectorList.filter(s => !s.includes(':hover'))
-    ]
   }
 
   function isAlreadyNested (rule) {
@@ -51,11 +64,13 @@ module.exports = ({
         return
       }
 
-      let [hoverSelectorList, nonHoverSelectorList] = parseSelector(
-        rule.selector
-      )
+      let {
+        hoverSelectors = [],
+        nonHoverSelectors = []
+      } = selectorProcessor.transformSync(rule.selector, { lossless: false })
+
       let mediaQuery = createMediaQuery(
-        rule.clone({ selectors: hoverSelectorList }),
+        rule.clone({ selectors: hoverSelectors }),
         { AtRule }
       )
 
@@ -64,7 +79,7 @@ module.exports = ({
       if (fallback) {
         rule.before(
           rule.clone({
-            selectors: hoverSelectorList.map(hoverSelector => {
+            selectors: hoverSelectors.map(hoverSelector => {
               if (
                 rootSelectors.some(rootSelector =>
                   hoverSelector.startsWith(rootSelector)
@@ -78,8 +93,8 @@ module.exports = ({
         )
       }
 
-      if (nonHoverSelectorList.length) {
-        rule.replaceWith(rule.clone({ selectors: nonHoverSelectorList }))
+      if (nonHoverSelectors.length) {
+        rule.replaceWith(rule.clone({ selectors: nonHoverSelectors }))
 
         return
       }

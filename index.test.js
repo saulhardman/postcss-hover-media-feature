@@ -41,11 +41,9 @@ describe('basic usage', () => {
   it('works with multiple selectors', () => {
     run(
       '.this-is-a-class:hover, .banana {}',
-      [
-        '.banana {}',
-        '@media (hover: hover) {.this-is-a-class:hover {}\n}'
-      ].join('')
+      '.banana {}@media (hover: hover) {.this-is-a-class:hover {}\n}'
     )
+
     run(
       '.this-is-a-class:hover, .banana:hover {}',
       '@media (hover: hover) {.this-is-a-class:hover, .banana:hover {}\n}'
@@ -57,9 +55,17 @@ describe('basic usage', () => {
       '@media (hover: hover) {.btn:hover {}}',
       '@media (hover: hover) {.btn:hover {}}'
     )
+
     run(
       '.p-index { @media (hover: hover) {.btn:hover {}} }',
       '.p-index { @media (hover: hover) {.btn:hover {}} }'
+    )
+  })
+
+  it('works with pseudo-class functions that accept selector lists as an argument', () => {
+    run(
+      ':is(button, [role="button"]):hover { background-color: transparent; }',
+      '@media (hover: hover) {:is(button,[role="button"]):hover { background-color: transparent; } }'
     )
   })
 })

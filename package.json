@@ -95,5 +95,8 @@
   },
   "jest": {
     "testEnvironment": "node"
+  },
+  "dependencies": {
+    "postcss-selector-parser": "^6.0.4"
   }
 }
