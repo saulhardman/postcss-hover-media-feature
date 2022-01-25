@@ -68,6 +68,13 @@ describe('basic usage', () => {
       '@media (hover: hover) {:is(button,[role="button"]):hover { background-color: transparent; } }'
     )
   })
+
+  it('ignores :hover pseudo-class selectors within :not pseudo-class selector lists', () => {
+    run(
+      '.list__item:not(:hover, .is-editing) .show-on-hover { visibility: hidden }',
+      '.list__item:not(:hover, .is-editing) .show-on-hover { visibility: hidden }'
+    )
+  })
 })
 
 describe('when `fallback: true`', () => {

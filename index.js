@@ -4,17 +4,22 @@ const selectorProcessor = selectorParser(selectors => {
   let hoverSelectors = []
 
   selectors.walk(selector => {
-    if (selector.type === 'pseudo' && `${selector}` === ':hover') {
-      hoverSelectors.push(`${selector.parent}`)
+    if (
+      selector.type === 'pseudo' &&
+      selector.toString() === ':hover' &&
+      selector.parent.value !== ':not' &&
+      selector.parent.toString() !== ':hover'
+    ) {
+      hoverSelectors.push(selector.parent.toString())
     }
   })
 
   let nonHoverSelectors = selectors.reduce((acc, selector) => {
-    if (hoverSelectors.includes(`${selector}`)) {
+    if (hoverSelectors.includes(selector.toString())) {
       return acc
     }
 
-    return [...acc, `${selector}`]
+    return [...acc, selector.toString()]
   }, [])
 
   return { hoverSelectors, nonHoverSelectors }
@@ -69,6 +74,10 @@ module.exports = ({
         nonHoverSelectors = []
       } = selectorProcessor.transformSync(rule.selector, { lossless: false })
 
+      if (hoverSelectors.length === 0) {
+        return
+      }
+
       let mediaQuery = createMediaQuery(
         rule.clone({ selectors: hoverSelectors }),
         { AtRule }
@@ -93,7 +102,7 @@ module.exports = ({
         )
       }
 
-      if (nonHoverSelectors.length) {
+      if (nonHoverSelectors.length > 0) {
         rule.replaceWith(rule.clone({ selectors: nonHoverSelectors }))
 
         return
