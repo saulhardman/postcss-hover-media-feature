@@ -31,7 +31,7 @@ module.exports = ({
   rootSelectors = []
 } = {}) => {
   function createMediaQuery (rule, { AtRule }) {
-    let media = new AtRule({ name: 'media', params: '(hover: hover)' })
+    let media = new AtRule({ name: 'media', params: '(hover: hover) and (pointer: fine)' })
 
     media.source = rule.source
 
