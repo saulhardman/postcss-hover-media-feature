@@ -44,7 +44,10 @@ module.exports = ({
     let container = rule.parent
     let count = 0
     let max = 100
-    while (container !== null && container.type !== 'root' && count < max) {
+    while (container !== null && container.type !== 'root') {
+      if (count > max) {
+        return true
+      }
       if (
         container.type === 'atrule' &&
         container.params.includes('hover: hover')
