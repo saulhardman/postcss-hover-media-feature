@@ -42,8 +42,12 @@ module.exports = ({
 
   function isAlreadyNested (rule) {
     let container = rule.parent
-
+    let count = 0
+    let max = 100
     while (container !== null && container.type !== 'root') {
+      if (count > max) {
+        return true
+      }
       if (
         container.type === 'atrule' &&
         container.params.includes('hover: hover')
@@ -52,6 +56,7 @@ module.exports = ({
       }
 
       container = container.parent
+      count += 1
     }
 
     return false
