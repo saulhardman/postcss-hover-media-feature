@@ -62,6 +62,18 @@ describe('basic usage', () => {
     )
   })
 
+  it('skips rules contained within `@media (hover:hover) {}` - no space used', () => {
+    run(
+      '@media (hover:hover) {.btn:hover {}}',
+      '@media (hover:hover) {.btn:hover {}}'
+    )
+
+    run(
+      '.p-index { @media (hover:hover) {.btn:hover {}} }',
+      '.p-index { @media (hover:hover) {.btn:hover {}} }'
+    )
+  })
+
   it('works with pseudo-class functions that accept selector lists as an argument', () => {
     run(
       ':is(button, [role="button"]):hover { background-color: transparent; }',
