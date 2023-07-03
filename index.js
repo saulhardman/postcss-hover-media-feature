@@ -46,7 +46,7 @@ module.exports = ({
     while (container !== null && container.type !== 'root') {
       if (
         container.type === 'atrule' &&
-        container.params.includes('hover: hover')
+        (container.params.includes('hover: hover') || container.params.includes('hover:hover'))
       ) {
         return true
       }
